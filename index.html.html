@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Delicias By Luisana — Pedidos</title>
+<link rel="stylesheet" href="./assets/summaries.css">
 <style>
 :root{
   --wine:#790807; --wine2:#9b1111; --cream:#fff8e9; --paper:#fffdf8;
@@ -88,6 +89,21 @@ input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);borde
   </div>
   <div id="production"></div>
 </section>
+<section class="panel summary-panel" aria-labelledby="summariesTitle">
+  <div class="panel-head"><div><h2 id="summariesTitle">📊 Resúmenes</h2><div class="price">Incluyen todos los boxes y pedidos guardados en este dispositivo, sin filtros de búsqueda.</div></div></div>
+  <div class="summary-controls">
+    <div class="summary-choice"><label for="summaryType">Ver resumen</label><select id="summaryType">
+      <option value="general">Resumen general</option>
+      <option value="sales">Ventas y cobros</option>
+      <option value="pending">Pendientes de cobro y entrega</option>
+      <option value="complete">Detalle completo de pedidos</option>
+    </select></div>
+    <button type="button" class="primary" id="sendSummary" disabled>📧 Enviar a mi Gmail</button>
+  </div>
+  <div class="price">Destino fijo: cluisanaesther@gmail.com. Se envía el resumen seleccionado.</div>
+  <p class="summary-status" id="summaryStatus" role="status" aria-live="polite" aria-atomic="true"></p>
+  <div class="summary-preview" id="summaryPreview"></div>
+</section>
 <div class="footer">Tus pedidos se guardan en este dispositivo.</div>
 </main>
 
@@ -168,6 +184,7 @@ function render(){
  document.getElementById('sSales').textContent=money(sales);
  document.getElementById('sPending').textContent=orders.filter(o=>!o.delivered).length;
  renderProduction();
+ if(window.DeliciasSummaries) window.DeliciasSummaries.render();
 }
 
 function renderProduction(){
@@ -213,6 +230,10 @@ function togglePaid(id){let o=orders.find(x=>x.id===id);o.paid=!o.paid;save();re
 function toggleDelivered(id){let o=orders.find(x=>x.id===id);o.delivered=!o.delivered;save();render()}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 setBox(1);
+</script>
+<script type="module">
+import { initializeSummaries } from './assets/summaries-ui.mjs';
+initializeSummaries(() => orders);
 </script>
 </body>
 </html>
