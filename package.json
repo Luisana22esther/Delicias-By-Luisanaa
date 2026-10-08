@@ -1,0 +1,10 @@
+{
+  "name": "delicias-by-luisana",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "@netlify/functions": "^5.0.0",
+    "@types/node": "^26.6.4",
+    "typescript": "^5.9.0"
+  }
+}
